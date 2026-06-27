@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'apexshield',
-    name: 'SFR Shield Cybersecurity',
+    name: 'Safiqtech Shield Cybersecurity',
     tagline: 'Zero-Trust Cloud Firewall',
     description: 'An intelligent cybersecurity shield providing micro-segmentation, visual threat graphs, and automated cloud compliance auditing to ensure data isolation at the boundary.',
     category: 'SecOps / Infrastructure',

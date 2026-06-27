@@ -23,7 +23,7 @@ export default function Header({ currentView, setView, portalTab, setPortalTab }
           </div>
           <div>
             <span className="font-sans text-lg font-bold tracking-tight text-gray-900 sm:text-xl">
-              SFR<span className="text-indigo-600">DIGITAL</span>
+              SAFIQ<span className="text-indigo-600">TECH</span>
             </span>
             <div className="font-mono text-[9px] font-medium tracking-wider text-gray-400 uppercase leading-none">
               Systems & Solutions

@@ -176,7 +176,7 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
     }
     
     const clientRef = clients.find(c => c.id === activeClientId);
-    const creatorName = portalRole === 'Client' ? (clientRef?.name || 'Client Contact') : 'SFR Support';
+    const creatorName = portalRole === 'Client' ? (clientRef?.name || 'Client Contact') : 'Safiqtech Support';
     const creatorRole = portalRole === 'Client' ? 'Client' : 'Engineer';
 
     try {
@@ -524,7 +524,7 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
                       <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
                           <h1 className="font-sans text-2xl font-bold tracking-tight">
-                            {portalRole === 'Manager' ? 'SFR Digital Operations Center' : `Welcome Back, ${clients.find(c => c.id === simulatedClientId)?.company || 'Valued Partner'}`}
+                            {portalRole === 'Manager' ? 'Safiqtech Operations Center' : `Welcome Back, ${clients.find(c => c.id === simulatedClientId)?.company || 'Valued Partner'}`}
                           </h1>
                           <p className="mt-1 font-sans text-sm text-indigo-200">
                             {portalRole === 'Manager' ? 'Real-time aggregated view of your IT firm metrics, contract values, and outstanding engineering tickets.' : 'Monitor your active development progress and coordinate technical ticket queues directly.'}

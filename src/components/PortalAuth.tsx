@@ -110,8 +110,8 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
         });
       } else {
         // Manager role
-        if (adminPasscode !== 'SFR2026') {
-          setErrorMsg('Invalid System Manager registration passcode. Use "SFR2026" for validation.');
+        if (adminPasscode !== 'SAFIQ2026') {
+          setErrorMsg('Invalid System Manager registration passcode. Use "SAFIQ2026" for validation.');
           setIsLoading(false);
           return;
         }
@@ -171,8 +171,8 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
 
         if (role === 'Manager') {
           // Verify passcode
-          if (adminPasscode !== 'SFR2026') {
-            setErrorMsg('Invalid System Manager registration passcode. Use "SFR2026" for validation.');
+          if (adminPasscode !== 'SAFIQ2026') {
+            setErrorMsg('Invalid System Manager registration passcode. Use "SAFIQ2026" for validation.');
             setIsLoading(false);
             return;
           }
@@ -259,7 +259,7 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 mb-4 shadow-inner">
             <Icon name="Cpu" className="h-6 w-6" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight uppercase">SFR <span className="text-indigo-400">Digital</span> Portal</h2>
+          <h2 className="text-2xl font-black tracking-tight uppercase">SAFIQ<span className="text-indigo-400">TECH</span> PORTAL</h2>
           <p className="mt-1.5 text-xs text-indigo-200/80 tracking-wide">
             Secure enterprise access gateway for partners and system architects.
           </p>
@@ -373,7 +373,7 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
                 <div className="space-y-1 bg-amber-50/50 p-3 rounded-xl border border-amber-100">
                   <div className="flex justify-between items-center mb-1">
                     <label className="block text-[11px] font-bold text-amber-800 uppercase tracking-wider">Manager Access Key</label>
-                    <span className="text-[10px] text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded font-mono font-bold">Hint: SFR2026</span>
+                    <span className="text-[10px] text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded font-mono font-bold">Hint: SAFIQ2026</span>
                   </div>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -448,7 +448,7 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
                   <button
                     type="button"
                     onClick={() => {
-                      onSandboxSelect('Manager', 'Alex Mercer', 'alex.mercer@sfr-digital.com');
+                      onSandboxSelect('Manager', 'Alex Mercer', 'alex.mercer@safiqtech.com');
                     }}
                     className="py-2 px-3 bg-slate-800 hover:bg-slate-900 text-white font-bold text-[11px] rounded-lg transition-all flex items-center justify-center space-x-1.5 shadow-sm active:scale-95"
                   >
@@ -608,7 +608,7 @@ export default function PortalAuth({ onAuthSuccess, onSandboxSelect }: PortalAut
                 <div className="space-y-1 bg-amber-50/50 p-3 rounded-xl border border-amber-100">
                   <div className="flex justify-between items-center mb-1">
                     <label className="block text-[11px] font-bold text-amber-800 uppercase tracking-wider">Manager Access Key</label>
-                    <span className="text-[10px] text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded font-mono font-bold">Hint: SFR2026</span>
+                    <span className="text-[10px] text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded font-mono font-bold">Hint: SAFIQ2026</span>
                   </div>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
