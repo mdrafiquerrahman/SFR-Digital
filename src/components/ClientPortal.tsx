@@ -302,9 +302,34 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
   if (!firebaseUser && !bypassAuthForDemo) {
     return (
       <div className="min-h-[85vh] bg-gray-50 flex flex-col items-center justify-center px-4 py-12 font-sans">
-        <PortalAuth onAuthSuccess={(user) => {
-          triggerToast(`✓ Authenticated as ${user.email}`);
-        }} />
+        <PortalAuth 
+          onAuthSuccess={(user) => {
+            triggerToast(`✓ Authenticated as ${user.email}`);
+          }} 
+          onSandboxSelect={(role, name, email, company, clientId) => {
+            const mockUser: any = {
+              uid: role === 'Manager' ? 'sandbox_manager_uid' : 'sandbox_client_uid',
+              email: email,
+              displayName: name,
+            };
+            const mockProfile: AppUser = {
+              uid: mockUser.uid,
+              name: name,
+              email: email,
+              role: role,
+              company: company,
+              clientId: clientId,
+              createdAt: new Date().toISOString()
+            };
+            setFirebaseUser(mockUser);
+            setUserProfile(mockProfile);
+            setPortalRole(role);
+            if (role === 'Client' && clientId) {
+              setSimulatedClientId(clientId);
+            }
+            triggerToast(`🚀 Authenticated as Sandbox ${role}: ${name}`);
+          }}
+        />
         <div className="mt-6 text-center">
           <button
             onClick={() => {
