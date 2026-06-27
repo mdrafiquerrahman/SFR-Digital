@@ -1,6 +1,6 @@
-# SFR Digital Systems & Client Portal
+# Safiqtech Systems & Client Portal
 
-A high-performance, responsive corporate showcase and integrated Client Operations Portal for **SFR Digital Systems**. This platform features real-time support ticket synchronization, interactive service status dashboards, and comprehensive project tracking.
+A high-performance, responsive corporate showcase and integrated Client Operations Portal for **Safiqtech Systems**. This platform features real-time support ticket synchronization, interactive service status dashboards, and comprehensive project tracking.
 
 ---
 
@@ -8,7 +8,7 @@ A high-performance, responsive corporate showcase and integrated Client Operatio
 
 ### 1. Corporate Solutions Showcase
 - **Modern IT Catalog**: Highlighting specialized enterprise capabilities in Cloud Architecture, Cybersecurity, and AI/ML integrations.
-- **Product Spotlight**: Showcasing cutting-edge proprietary tools like *SFR Shield Cybersecurity* with interactive metrics.
+- **Product Spotlight**: Showcasing cutting-edge proprietary tools like *Safiqtech Shield Cybersecurity* with interactive metrics.
 
 ### 2. Live Client Portal
 - **Simulated Role Switching**: Real-time perspective swapping between **Client User** and **Operations Manager/Engineer** to demonstrate end-to-end workflows.
@@ -67,9 +67,9 @@ A high-performance, responsive corporate showcase and integrated Client Operatio
 ### Installation
 1. Clone this repository to your local machine:
    ```bash
-   git clone <repository-url>
-   cd sfr-digital
-   ```
+    git clone <repository-url>
+    cd safiqtech
+    ```
 
 2. Install the necessary project dependencies:
    ```bash
@@ -101,4 +101,4 @@ The database is secured via custom Firebase Security Rules defined in `firestore
 ---
 
 ## 📄 License
-Licensed under the [MIT License](LICENSE). &copy; 2026 SFR Digital Systems Inc. All rights reserved.
+Licensed under the [MIT License](LICENSE). &copy; 2026 Safiqtech Systems Inc. All rights reserved.
