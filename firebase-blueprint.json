@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "Client": {
+      "title": "Client",
+      "description": "Information about a client organization or individual",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the client" },
+        "name": { "type": "string", "description": "Name of the contact person" },
+        "company": { "type": "string", "description": "Name of the client company" },
+        "email": { "type": "string", "description": "Email address" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "status": { "type": "string", "enum": ["Active", "Lead", "Inactive"], "description": "Relationship status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date client was registered" }
+      },
+      "required": ["name", "company", "email", "status"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "A contract project being tracked for a client",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the project" },
+        "name": { "type": "string", "description": "Project title" },
+        "clientId": { "type": "string", "description": "Reference to the client entity ID" },
+        "clientName": { "type": "string", "description": "Cached client company name for display" },
+        "description": { "type": "string", "description": "Detailed description of requirements" },
+        "status": { "type": "string", "enum": ["Planning", "In Progress", "Completed", "On Hold"], "description": "Project workflow state" },
+        "progress": { "type": "integer", "description": "Completion percentage from 0 to 100" },
+        "budget": { "type": "integer", "description": "Contract value in USD" },
+        "startDate": { "type": "string", "format": "date", "description": "Project start date" },
+        "endDate": { "type": "string", "format": "date", "description": "Expected or actual delivery date" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date record was created" }
+      },
+      "required": ["name", "clientId", "status", "progress"]
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "A support ticket submitted by or for a client",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the ticket" },
+        "title": { "type": "string", "description": "Summary of the issue or request" },
+        "description": { "type": "string", "description": "Full details of the issue" },
+        "status": { "type": "string", "enum": ["Open", "In Progress", "Resolved", "Closed"], "description": "Current resolution stage" },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"], "description": "Urgency level" },
+        "clientId": { "type": "string", "description": "Reference to the client entity ID" },
+        "projectId": { "type": "string", "description": "Optional reference to the project entity ID" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission date" },
+        "creatorName": { "type": "string", "description": "Name of the person who submitted the ticket" },
+        "creatorRole": { "type": "string", "description": "Role of the person (e.g. Client, Manager)" }
+      },
+      "required": ["title", "description", "status", "priority", "clientId"]
+    }
+  },
+  "firestore": {
+    "clients": {
+      "schema": "Client",
+      "description": "Collection of clients"
+    },
+    "projects": {
+      "schema": "Project",
+      "description": "Collection of custom contract projects"
+    },
+    "tickets": {
+      "schema": "Ticket",
+      "description": "Collection of support and maintenance tickets"
+    }
+  }
+}

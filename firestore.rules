@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper to validate basic ID patterns
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 100;
+    }
+
+    // Helper to validate client fields
+    function isValidClient(client) {
+      return client.keys().hasAll(['name', 'company', 'email', 'status'])
+        && client.name is string && client.name.size() >= 1 && client.name.size() <= 200
+        && client.company is string && client.company.size() >= 1 && client.company.size() <= 200
+        && client.email is string && client.email.size() >= 3 && client.email.size() <= 200
+        && client.status in ['Active', 'Lead', 'Inactive'];
+    }
+
+    // Helper to validate project fields
+    function isValidProject(project) {
+      return project.keys().hasAll(['name', 'clientId', 'status', 'progress'])
+        && project.name is string && project.name.size() >= 1 && project.name.size() <= 200
+        && project.clientId is string && project.clientId.size() >= 1 && project.clientId.size() <= 100
+        && project.status in ['Planning', 'In Progress', 'Completed', 'On Hold']
+        && (project.progress is int || project.progress is float) && project.progress >= 0 && project.progress <= 100;
+    }
+
+    // Helper to validate ticket fields
+    function isValidTicket(ticket) {
+      return ticket.keys().hasAll(['title', 'description', 'status', 'priority', 'clientId'])
+        && ticket.title is string && ticket.title.size() >= 1 && ticket.title.size() <= 300
+        && ticket.description is string && ticket.description.size() >= 1 && ticket.description.size() <= 10000
+        && ticket.status in ['Open', 'In Progress', 'Resolved', 'Closed']
+        && ticket.priority in ['Low', 'Medium', 'High', 'Critical']
+        && ticket.clientId is string && ticket.clientId.size() >= 1 && ticket.clientId.size() <= 100;
+    }
+
+    // Allow read and write for clients, projects, and tickets to allow testing in preview.
+    // In production, these should be locked down to authenticated users, but to ensure the live preview 
+    // is instantly interactive and fully operational, we allow public access with strong type validation.
+    
+    match /clients/{clientId} {
+      allow read: if true;
+      allow create, update: if isValidId(clientId) && isValidClient(request.resource.data);
+      allow delete: if true;
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update: if isValidId(projectId) && isValidProject(request.resource.data);
+      allow delete: if true;
+    }
+
+    match /tickets/{ticketId} {
+      allow read: if true;
+      allow create, update: if isValidId(ticketId) && isValidTicket(request.resource.data);
+      allow delete: if true;
+    }
+  }
+}
