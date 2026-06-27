@@ -133,7 +133,9 @@ export default function PortalAuth({ onAuthSuccess }: PortalAuthProps) {
       } else if (err.code === 'auth/invalid-email') {
         friendlyError = 'Invalid email address format.';
       }
-      setErrorMsg(friendlyError);
+      // Include the actual error code or message for transparent debugging
+      const details = err.message || err.code || String(err);
+      setErrorMsg(`${friendlyError} Details: ${details}`);
     } finally {
       setIsLoading(false);
     }
