@@ -3,10 +3,14 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   subscribeToClients, addClient, updateClientStatus, deleteClient,
   subscribeToProjects, addProject, updateProjectProgress, updateProjectStatus, deleteProject,
-  subscribeToTickets, addTicket, updateTicketStatus, updateTicketPriority, deleteTicket
+  subscribeToTickets, addTicket, updateTicketStatus, updateTicketPriority, deleteTicket,
+  getUserProfile
 } from '../dbService';
-import { Client, Project, Ticket } from '../types';
+import { Client, Project, Ticket, AppUser } from '../types';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { auth } from '../firebase';
 import Icon from './Icon';
+import PortalAuth from './PortalAuth';
 
 interface ClientPortalProps {
   initialTab: string;
@@ -40,8 +44,41 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
   const [portalRole, setPortalRole] = useState<'Client' | 'Manager'>('Manager');
   const [simulatedClientId, setSimulatedClientId] = useState<string>('client_brightbuild');
 
+  // True Firebase Auth states
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<AppUser | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
+  const [bypassAuthForDemo, setBypassAuthForDemo] = useState<boolean>(false);
+
   // Success Feedbacks
   const [notification, setNotification] = useState<string | null>(null);
+
+  // Auth State Listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setIsAuthLoading(true);
+      if (user) {
+        setFirebaseUser(user);
+        try {
+          const profile = await getUserProfile(user.uid);
+          if (profile) {
+            setUserProfile(profile);
+            setPortalRole(profile.role);
+            if (profile.role === 'Client' && profile.clientId) {
+              setSimulatedClientId(profile.clientId);
+            }
+          }
+        } catch (err) {
+          console.error("Error fetching user profile:", err);
+        }
+      } else {
+        setFirebaseUser(null);
+        setUserProfile(null);
+      }
+      setIsAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Subscribe to real-time database updates on mount
   useEffect(() => {
@@ -67,6 +104,17 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
   const triggerToast = (message: string) => {
     setNotification(message);
     setTimeout(() => setNotification(null), 3000);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setBypassAuthForDemo(false);
+      triggerToast('✓ Successfully signed out of portal workspace');
+    } catch (err) {
+      console.error(err);
+      triggerToast('❌ Error signing out');
+    }
   };
 
   // Form submissions
@@ -242,36 +290,91 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
     ? projects.filter(p => p.clientId === simulatedClientId)
     : projects;
 
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 bg-gray-50 font-sans">
+        <Icon name="Loader2" className="h-8 w-8 text-indigo-600 animate-spin" />
+        <p className="mt-3 text-xs text-gray-500 font-medium">Verifying secure database keys...</p>
+      </div>
+    );
+  }
+
+  if (!firebaseUser && !bypassAuthForDemo) {
+    return (
+      <div className="min-h-[85vh] bg-gray-50 flex flex-col items-center justify-center px-4 py-12 font-sans">
+        <PortalAuth onAuthSuccess={(user) => {
+          triggerToast(`✓ Authenticated as ${user.email}`);
+        }} />
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => {
+              setBypassAuthForDemo(true);
+              setPortalRole('Manager');
+              triggerToast('🚀 Entered Demo Mode (simulation active)');
+            }}
+            className="text-xs text-gray-400 hover:text-indigo-600 transition-colors font-mono tracking-wider flex items-center justify-center space-x-1 mx-auto"
+          >
+            <span>Or bypass authentication & try public demo</span>
+            <Icon name="ArrowRight" className="h-3 w-3" />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       
       {/* Role & Simulator Selector Utility */}
       <div className="bg-indigo-900 text-white px-4 py-3 sm:px-6 lg:px-8 border-b border-indigo-950 flex flex-col md:flex-row items-center justify-between text-xs gap-3">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold uppercase tracking-wider text-indigo-200">Simulate Portal Persona:</span>
-          <div className="inline-flex rounded-md bg-indigo-800 p-0.5">
+        {firebaseUser ? (
+          <div className="flex items-center gap-3">
+            <div className="flex items-center space-x-2">
+              <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-indigo-700 text-[10px] font-bold text-indigo-200">
+                {userProfile?.name?.charAt(0) || 'U'}
+              </span>
+              <span className="font-semibold text-indigo-100">
+                Logged in: <span className="text-white">{userProfile?.name || firebaseUser.email}</span> 
+                <span className="ml-2 px-1.5 py-0.5 rounded bg-indigo-800 text-[10px] font-mono font-bold text-indigo-300 uppercase">
+                  {userProfile?.role || 'Guest'}
+                </span>
+              </span>
+            </div>
             <button
-              onClick={() => {
-                setPortalRole('Manager');
-                triggerToast('Switched to manager perspective: access full clients and project database');
-              }}
-              className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${portalRole === 'Manager' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-200 hover:text-white'}`}
+              onClick={handleSignOut}
+              className="bg-indigo-950 hover:bg-rose-900 text-white font-bold py-1 px-2.5 rounded text-[10px] transition-colors flex items-center space-x-1 border border-indigo-800"
             >
-              System Manager (Full Access)
-            </button>
-            <button
-              onClick={() => {
-                setPortalRole('Client');
-                triggerToast('Switched to client perspective: view self records and submit tickets');
-              }}
-              className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${portalRole === 'Client' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-200 hover:text-white'}`}
-            >
-              Partner Client View
+              <Icon name="LogOut" className="h-3 w-3" />
+              <span>Sign Out</span>
             </button>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="font-semibold uppercase tracking-wider text-indigo-200">Demo Simulation Persona:</span>
+            <div className="inline-flex rounded-md bg-indigo-800 p-0.5">
+              <button
+                onClick={() => {
+                  setPortalRole('Manager');
+                  triggerToast('Switched to manager perspective: access full clients and project database');
+                }}
+                className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${portalRole === 'Manager' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-200 hover:text-white'}`}
+              >
+                System Manager (Full Access)
+              </button>
+              <button
+                onClick={() => {
+                  setPortalRole('Client');
+                  triggerToast('Switched to client perspective: view self records and submit tickets');
+                }}
+                className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${portalRole === 'Client' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-200 hover:text-white'}`}
+              >
+                Partner Client View
+              </button>
+            </div>
+          </div>
+        )}
 
-        {portalRole === 'Client' && clients.length > 0 && (
+        {portalRole === 'Client' && !firebaseUser && clients.length > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-indigo-200 font-semibold">Acting Client Company:</span>
             <select
@@ -286,6 +389,13 @@ export default function ClientPortal({ initialTab }: ClientPortalProps) {
                 <option key={c.id} value={c.id}>{c.company} ({c.name})</option>
               ))}
             </select>
+          </div>
+        )}
+
+        {firebaseUser && userProfile?.role === 'Client' && (
+          <div className="text-indigo-200 text-xs flex items-center space-x-1">
+            <Icon name="Building" className="h-3.5 w-3.5 text-indigo-400" />
+            <span>Organization: <strong className="text-white">{userProfile.company}</strong></span>
           </div>
         )}
 

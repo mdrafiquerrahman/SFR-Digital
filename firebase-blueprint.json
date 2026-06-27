@@ -51,6 +51,21 @@
         "creatorRole": { "type": "string", "description": "Role of the person (e.g. Client, Manager)" }
       },
       "required": ["title", "description", "status", "priority", "clientId"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Authenticated user information and access role details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth unique user identifier" },
+        "name": { "type": "string", "description": "Full name of the registered user" },
+        "email": { "type": "string", "description": "Registered email address" },
+        "role": { "type": "string", "enum": ["Client", "Manager"], "description": "Portal access role mapping" },
+        "company": { "type": "string", "description": "Organization name, if Client role" },
+        "clientId": { "type": "string", "description": "Associated document ID in clients collection, if Client" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date user profile was initialized" }
+      },
+      "required": ["uid", "name", "email", "role"]
     }
   },
   "firestore": {
@@ -65,6 +80,10 @@
     "tickets": {
       "schema": "Ticket",
       "description": "Collection of support and maintenance tickets"
+    },
+    "users": {
+      "schema": "User",
+      "description": "Collection of authenticated user profiles"
     }
   }
 }

@@ -56,5 +56,9 @@ service cloud.firestore {
       allow create, update: if isValidId(ticketId) && isValidTicket(request.resource.data);
       allow delete: if true;
     }
+
+    match /users/{userId} {
+      allow read, write: if true;
+    }
   }
 }

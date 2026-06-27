@@ -52,3 +52,13 @@ export interface Service {
   iconName: string; // Lucide icon name
   features: string[];
 }
+
+export interface AppUser {
+  uid: string;
+  name: string;
+  email: string;
+  role: 'Client' | 'Manager';
+  company?: string;
+  clientId?: string;
+  createdAt: string;
+}

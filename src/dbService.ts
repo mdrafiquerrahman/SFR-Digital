@@ -2,6 +2,7 @@ import {
   collection, 
   doc, 
   setDoc, 
+  getDoc,
   getDocs, 
   updateDoc, 
   deleteDoc, 
@@ -12,7 +13,7 @@ import {
   writeBatch
 } from 'firebase/firestore';
 import { db, auth } from './firebase';
-import { Client, Project, Ticket } from './types';
+import { Client, Project, Ticket, AppUser } from './types';
 import { SEED_CLIENTS, SEED_PROJECTS, SEED_TICKETS } from './data';
 
 // --- Error Handling & ABAC Zero-Trust Telemetry Enforcer ---
@@ -284,5 +285,35 @@ export async function deleteTicket(id: string) {
     await deleteDoc(doc(db, 'tickets', id));
   } catch (error) {
     handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+// 4. Authenticated User Profiles
+export async function getUserProfile(uid: string): Promise<AppUser | null> {
+  const path = `users/${uid}`;
+  try {
+    const docRef = doc(db, 'users', uid);
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      return snap.data() as AppUser;
+    }
+    return null;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.GET, path);
+  }
+}
+
+export async function createUserProfile(uid: string, profile: Omit<AppUser, 'uid' | 'createdAt'>): Promise<AppUser> {
+  const path = `users/${uid}`;
+  const userProfile: AppUser = {
+    uid,
+    ...profile,
+    createdAt: new Date().toISOString()
+  };
+  try {
+    await setDoc(doc(db, 'users', uid), userProfile);
+    return userProfile;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.CREATE, path);
   }
 }
