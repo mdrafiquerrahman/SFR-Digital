@@ -35,7 +35,7 @@ export default function App() {
           <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 shadow-xl shadow-indigo-900/40">
             <Icon name="Cpu" className="h-7 w-7 text-white animate-pulse" />
           </div>
-          <h2 className="mt-6 font-sans text-lg font-bold tracking-tight">SAFIQTECH SYSTEMS</h2>
+          <h2 className="mt-6 font-sans text-lg font-bold tracking-tight">SFR DIGITECH SYSTEMS</h2>
           <p className="mt-2 font-mono text-[11px] text-indigo-400 uppercase tracking-widest animate-pulse">
             Configuring Real-Time Firestore Synchronization...
           </p>

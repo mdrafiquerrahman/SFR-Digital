@@ -12,7 +12,7 @@ export default function Footer() {
                 <Icon name="Cpu" className="h-4 w-4" />
               </div>
               <span className="font-sans text-md font-bold text-white tracking-tight">
-                SAFIQ<span className="text-indigo-400">TECH</span>
+                SFR <span className="text-indigo-400">DIGITECH</span>
               </span>
             </div>
             <p className="mt-4 font-sans text-sm text-gray-400 max-w-xs">
@@ -57,7 +57,7 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between font-sans text-xs text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Safiqtech Systems Inc. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} SFR Digitech Systems Inc. All rights reserved.</p>
           <p className="mt-2 sm:mt-0">Enterprise Grade • ISO 27001 Certified</p>
         </div>
       </div>

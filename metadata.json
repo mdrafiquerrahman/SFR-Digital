@@ -1,6 +1,6 @@
 {
-  "name": "Safiqtech Portal & Showcase",
-  "description": "A responsive showcase for Safiqtech (product & service based) featuring an integrated Client Portal with real-time support tickets, database-backed project tracking, and interactive status dashboards.",
+  "name": "SFR Digitech Portal & Showcase",
+  "description": "A responsive showcase for SFR Digitech (product & service based) featuring an integrated Client Portal with real-time support tickets, database-backed project tracking, and interactive status dashboards.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
