@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { PRODUCTS, SERVICES, PORTFOLIO } from '../data';
+import { PRODUCTS, SERVICES, PORTFOLIO, PACKAGES } from '../data';
 import Icon from './Icon';
 
 interface HomeShowcaseProps {
@@ -215,6 +215,119 @@ export default function HomeShowcase({ onEnterPortal }: HomeShowcaseProps) {
                       </div>
                     ))}
                   </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3.5 PRICING & PACKAGES SECTION */}
+      <section id="pricing" className="py-20 sm:py-24 bg-gray-50 border-b border-gray-200/60">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="font-sans text-xs font-semibold uppercase tracking-widest text-indigo-600">Transparent Pricing</h2>
+            <p className="mt-2 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Engineered Website Packages</p>
+            <p className="mt-4 font-sans text-md text-gray-600">
+              Choose a tailored solution crafted specifically for your scale, fully integrated with SFR Digitech automation suites and comprehensive social media deliverables.
+            </p>
+          </div>
+
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-100px' }}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch"
+          >
+            {PACKAGES.map((pkg) => (
+              <motion.div 
+                key={pkg.id}
+                variants={itemVariants}
+                className={`flex flex-col rounded-2xl border ${pkg.colorTheme.border} ${pkg.colorTheme.bg} ${pkg.colorTheme.text} shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
+              >
+                {pkg.popular && (
+                  <div className="absolute top-0 right-0 mt-4 mr-4">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400 border border-indigo-500/30 animate-pulse">
+                      <Icon name="Sparkles" className="h-3 w-3" />
+                      <span>Most Popular</span>
+                    </span>
+                  </div>
+                )}
+
+                <div className="p-8 flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-semibold ${pkg.colorTheme.badge}`}>
+                      {pkg.automation}
+                    </span>
+                  </div>
+                  
+                  <h3 className="mt-4 font-sans text-2xl font-extrabold tracking-tight">
+                    {pkg.name}
+                  </h3>
+                  
+                  <p className={`mt-2 font-sans text-xs leading-relaxed ${pkg.id === 'standard' ? 'text-slate-300' : 'text-gray-500'}`}>
+                    {pkg.tagline}
+                  </p>
+
+                  <div className="mt-6 flex items-baseline">
+                    <span className="font-sans text-4xl font-extrabold tracking-tight">{pkg.price}</span>
+                    <span className={`ml-2 font-sans text-sm ${pkg.id === 'standard' ? 'text-slate-300' : 'text-gray-500'}`}>
+                      one-time
+                    </span>
+                  </div>
+
+                  <div className={`mt-2 py-1.5 px-3 rounded-lg flex items-center justify-between text-xs font-semibold ${pkg.id === 'standard' ? 'bg-indigo-500/10 text-indigo-300 border border-indigo-500/20' : 'bg-indigo-50 text-indigo-700'}`}>
+                    <span>{pkg.maintenance}</span>
+                    <span className="opacity-80">Included</span>
+                  </div>
+
+                  <p className={`mt-3 font-mono text-[11px] ${pkg.id === 'standard' ? 'text-indigo-300' : 'text-indigo-600'}`}>
+                    Extra Maintenance: <span className="font-bold">{pkg.extraMaintenance}</span>
+                  </p>
+
+                  {/* USE CASES */}
+                  <div className="mt-8">
+                    <h4 className="font-sans text-xs font-bold uppercase tracking-wider opacity-85 mb-4">
+                      Supported Project Formats
+                    </h4>
+                    <div className="space-y-3">
+                      {pkg.useCases.map((uc, index) => (
+                        <div 
+                          key={index} 
+                          className={`p-3 rounded-xl border transition-colors ${pkg.id === 'standard' ? 'bg-slate-900/50 border-slate-800 hover:bg-slate-850' : 'bg-gray-50 border-gray-100 hover:bg-gray-100/50'}`}
+                        >
+                          <h5 className="font-sans text-xs font-bold tracking-tight">
+                            {uc.title}
+                          </h5>
+                          <p className={`mt-1 font-sans text-[11px] leading-relaxed ${pkg.id === 'standard' ? 'text-slate-400' : 'text-gray-500'}`}>
+                            {uc.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`p-8 border-t ${pkg.id === 'standard' ? 'border-slate-800 bg-slate-900/40' : 'border-gray-100 bg-gray-50/50'}`}>
+                  <h4 className="font-sans text-xs font-bold uppercase tracking-wider opacity-85 mb-3">
+                    Deliverables & Features
+                  </h4>
+                  <ul className="space-y-2 mb-6">
+                    {pkg.features.map((feat, idx) => (
+                      <li key={idx} className="flex items-start text-xs font-sans">
+                        <Icon name="Check" className="h-4 w-4 text-emerald-500 shrink-0 mr-2 mt-0.5" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    onClick={onEnterPortal}
+                    className={`w-full py-3 px-4 rounded-xl font-sans text-xs font-bold tracking-wide transition-all uppercase hover:-translate-y-0.5 active:translate-y-0 ${pkg.colorTheme.button}`}
+                  >
+                    Select Plan & Consult
+                  </button>
                 </div>
               </motion.div>
             ))}

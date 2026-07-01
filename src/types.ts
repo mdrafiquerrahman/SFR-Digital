@@ -53,6 +53,32 @@ export interface Service {
   features: string[];
 }
 
+export interface PricingPackage {
+  id: string;
+  name: string;
+  price: string;
+  posts: string;
+  postsDetail: string;
+  automation: string;
+  maintenance: string;
+  extraMaintenance: string;
+  tagline: string;
+  description: string;
+  useCases: {
+    title: string;
+    description: string;
+  }[];
+  features: string[];
+  popular?: boolean;
+  colorTheme: {
+    bg: string;
+    border: string;
+    text: string;
+    badge: string;
+    button: string;
+  };
+}
+
 export interface AppUser {
   uid: string;
   name: string;

@@ -1,4 +1,4 @@
-import { Product, Service, Client, Project, Ticket } from './types';
+import { Product, Service, Client, Project, Ticket, PricingPackage } from './types';
 
 export const PRODUCTS: Product[] = [
   {
@@ -210,5 +210,155 @@ export const SEED_TICKETS: Ticket[] = [
     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     creatorName: 'Anya Sen',
     creatorRole: 'Client'
+  }
+];
+
+export const PACKAGES: PricingPackage[] = [
+  {
+    id: 'normal',
+    name: 'Normal Business Website',
+    price: 'Rs 14,999',
+    posts: '14 Posts',
+    postsDetail: '5 Reels, 5 Photo Posts, 4 Stories',
+    automation: 'Basic Automation',
+    maintenance: '2 Months Free Maintenance',
+    extraMaintenance: 'Rs 499 per month',
+    tagline: 'Perfect for local shops, small startups, or individual professionals wanting a quick, clean digital footprint.',
+    description: 'Single-page or low-page-count sites with zero to minimal programming, focused entirely on elegant informational display.',
+    useCases: [
+      {
+        title: 'Landing Page',
+        description: 'A single page designed specifically for one targeted marketing goal or promotion.'
+      },
+      {
+        title: 'Brochure Website',
+        description: 'A basic 3-to-5 page site showcasing standard business info (About, Services, Contact).'
+      },
+      {
+        title: 'Personal Portfolio',
+        description: 'A simple, gorgeous grid or gallery displaying a creator\'s work, resume, and skills.'
+      },
+      {
+        title: 'Basic Blog',
+        description: 'A clean, content-focused site for writing articles and sharing business news updates.'
+      },
+      {
+        title: 'Link-in-Bio Page',
+        description: 'An ultra-simple mobile landing page consolidating all your social media links beautifully.'
+      }
+    ],
+    features: [
+      '14 Curated Social Media Posts (5 Reels, 5 Posts)',
+      'Basic Automation (Simple contact forms)',
+      'Single-page or 3-5 Page Brochure Layout',
+      'Fully Mobile-Responsive Designs',
+      'Standard SSL & Custom Domain setup assistance',
+      '2 Months of Complementary Maintenance',
+      'Extra Maintenance at just Rs 499/mo'
+    ],
+    colorTheme: {
+      bg: 'bg-white',
+      border: 'border-slate-200/80',
+      text: 'text-slate-900',
+      badge: 'bg-slate-100 text-slate-800',
+      button: 'bg-slate-900 hover:bg-slate-800 text-white'
+    }
+  },
+  {
+    id: 'standard',
+    name: 'Standard Business Website',
+    price: 'Rs 24,999',
+    posts: '21 Posts',
+    postsDetail: '21 Posts + dynamic promotion',
+    automation: 'Real Estate Agent Automation',
+    maintenance: '4 Months Free Maintenance',
+    extraMaintenance: 'Rs 599 per month',
+    tagline: 'Ideal for real estate agents, growing brands, and businesses requiring lead pipelines and dynamic content.',
+    description: 'Websites featuring Content Management Systems (CMS), dynamic listing layouts, and interactive workflows.',
+    useCases: [
+      {
+        title: 'Standard Business Site',
+        description: 'A complete corporate website with lead-generation forms, service pages, and reviews/testimonials.'
+      },
+      {
+        title: 'Basic E-commerce',
+        description: 'An online storefront selling up to a few hundred products with standard secure payment gateways.'
+      },
+      {
+        title: 'Directory / Listing Site',
+        description: 'A professional platform listing local businesses, real estate properties, or job openings.'
+      },
+      {
+        title: 'Event Website',
+        description: 'A modern site featuring event schedules, interactive speaker bios, and basic ticket registration.'
+      },
+      {
+        title: 'Non-Profit / Charity',
+        description: 'A platform designed to share a clear mission, post updates, and accept secure online donations.'
+      }
+    ],
+    features: [
+      '21 Social Media Posts + Active Promotion',
+      'Real Estate Agent / Lead Automation workflows',
+      'Dynamic Content Management System (CMS)',
+      'Up to 10 Pages or Product Collections',
+      'Custom Forms & Lead Capture Pipelines',
+      '4 Months of Complementary Maintenance',
+      'Extra Maintenance at just Rs 599/mo'
+    ],
+    popular: true,
+    colorTheme: {
+      bg: 'bg-slate-900',
+      border: 'border-indigo-500/30',
+      text: 'text-white',
+      badge: 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30',
+      button: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25'
+    }
+  },
+  {
+    id: 'premium',
+    name: 'Premium Enterprise Website',
+    price: 'Rs 39,999',
+    posts: '25 Posts + 2 Ads',
+    postsDetail: '25 Posts + 2 Ad Campaigns + promotion',
+    automation: 'AI Chatbot & All Automation',
+    maintenance: '6 Months Free Maintenance',
+    extraMaintenance: 'Rs 799 per month',
+    tagline: 'Our ultimate package for large brands, educational systems, marketplaces, and tailored communication portals.',
+    description: 'Fully customized large-scale platforms with smart automation, secure access portals, and advanced database workflows.',
+    useCases: [
+      {
+        title: 'Advanced E-commerce / Marketplace',
+        description: 'Supporting multi-vendor selling, dynamic tiered pricing, coupon systems, and global logistics.'
+      },
+      {
+        title: 'Membership & LMS',
+        description: 'Learning Management Systems offering online courses, user progress trackers, and subscription plans.'
+      },
+      {
+        title: 'Community & Forum Hubs',
+        description: 'Large social hubs featuring user profiles, live feeds, messaging systems, and discussion boards.'
+      },
+      {
+        title: 'Custom Client/Web Portals',
+        description: 'Secure, bespoke platforms built specifically for internal employee use, patient management, or client communications.'
+      }
+    ],
+    features: [
+      '25 Curated Social Media Posts + 2 Ad Campaigns',
+      'Intelligent Chatbot & Full Automation suite',
+      'Custom Client Operations Portal integration',
+      'Unrestricted Page Count & Advanced Databases',
+      'Advanced Membership & LMS capabilities',
+      '6 Months of Complementary Maintenance',
+      'Extra Maintenance at just Rs 799/mo'
+    ],
+    colorTheme: {
+      bg: 'bg-white',
+      border: 'border-slate-200/80',
+      text: 'text-slate-900',
+      badge: 'bg-purple-100 text-purple-800',
+      button: 'bg-purple-900 hover:bg-purple-800 text-white'
+    }
   }
 ];
